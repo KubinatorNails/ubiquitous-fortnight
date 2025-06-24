@@ -5,20 +5,29 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Kubinator Nails</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
   <style>
     * { box-sizing: border-box; }
     body {
       margin: 0;
       font-family: 'Montserrat', sans-serif;
-      background-color: #fff8f0;
+      background: linear-gradient(180deg, #fff8f0 0%, #fce4ff 100%);
       color: #333;
       line-height: 1.6;
+      overflow-x: hidden;
     }
     header {
-      background-color: #7b5ea7;
+      background: linear-gradient(135deg, #7b5ea7, #e0b3ff);
       color: white;
       padding: 2rem 1rem;
       text-align: center;
+      position: relative;
+      overflow: hidden;
+      animation: headerGlow 6s infinite ease-in-out;
+    }
+    @keyframes headerGlow {
+      0%, 100% { box-shadow: 0 0 20px #cba1ff inset; }
+      50% { box-shadow: 0 0 40px #fff inset; }
     }
     header img {
       max-height: 150px;
@@ -26,16 +35,22 @@
       border-radius: 50%;
       background-color: #fff;
       padding: 0.5rem;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-      transition: transform 0.3s ease;
+      box-shadow: 0 4px 20px rgba(255,0,255,0.3);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
     header img:hover {
-      transform: scale(1.05) rotate(-2deg);
+      transform: scale(1.1) rotate(-2deg);
+      box-shadow: 0 6px 30px rgba(255,0,255,0.5);
     }
     h1 {
       margin: 0.5rem 0;
-      font-size: 2.5rem;
-      text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+      font-size: 2.7rem;
+      text-shadow: 2px 2px 6px rgba(0,0,0,0.3);
+      animation: textFlash 3s infinite alternate;
+    }
+    @keyframes textFlash {
+      0% { color: #fff; }
+      100% { color: #ffe1ff; }
     }
     h2 {
       font-size: 2rem;
@@ -47,24 +62,66 @@
       margin: auto;
     }
     .hero {
-      background: linear-gradient(135deg, #ffe1e1 0%, #fff 100%);
+      background: radial-gradient(circle at center, #ffe1e1 0%, #ffffff 100%);
       text-align: center;
       padding: 4rem 2rem;
+      position: relative;
+      overflow: hidden;
+      z-index: 0;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: conic-gradient(from 0deg, #fff, #f0f, #fff);
+      animation: spin 12s linear infinite;
+      opacity: 0.1;
+      z-index: -1;
+    }
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
     }
     .hero h2 {
-      font-size: 2.8rem;
+      font-size: 3rem;
       color: #7b5ea7;
+      position: relative;
+    }
+    .hero h2::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      bottom: -10px;
+      width: 80px;
+      height: 4px;
+      background: linear-gradient(90deg, #f0f, #7b5ea7);
+      transform: translateX(-50%);
+      border-radius: 2px;
     }
     .hero p {
       max-width: 700px;
       margin: 1rem auto 2rem;
-      font-size: 1.2rem;
+      font-size: 1.3rem;
     }
     .hero img {
       margin-top: 2rem;
       max-width: 100%;
       border-radius: 12px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      animation: fadeInZoom 2s ease-out;
+    }
+    @keyframes fadeInZoom {
+      from {
+        opacity: 0;
+        transform: scale(0.9);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
     }
     .services ul {
       list-style: none;
@@ -77,19 +134,31 @@
       background: #f9e6ff;
       padding: 1.5rem;
       border-left: 5px solid #7b5ea7;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      border-radius: 10px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .services li:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
     }
     .gallery {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 1.5rem;
       margin-top: 2rem;
+      justify-items: center;
     }
     .gallery img {
       width: 100%;
+      max-width: 280px;
       border-radius: 10px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .gallery img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.2);
     }
     .testimonials {
       background-color: #f3efff;
@@ -101,6 +170,10 @@
       margin: 2rem auto;
       max-width: 800px;
       font-size: 1.2rem;
+      background: #fff;
+      padding: 1rem 2rem;
+      border-left: 5px solid #7b5ea7;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
     }
     .about {
       background-color: #fafafa;
@@ -116,6 +189,11 @@
       max-width: 500px;
       margin-top: 2rem;
       border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transition: transform 0.4s ease;
+    }
+    .about img:hover {
+      transform: scale(1.03);
     }
     footer {
       background-color: #eee;
@@ -126,7 +204,6 @@
   </style>
 </head>
 <body>
-
   <header>
     <img src="logo.png" alt="Kubinator Nails Logo">
     <h1>Kubinator Nails</h1>
@@ -182,5 +259,7 @@
     &copy; 2025 Kubinator Nails. All rights reserved. Powered by glitter and feet.
   </footer>
 
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>AOS.init({ once: true });</script>
 </body>
 </html>
