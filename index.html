@@ -29,7 +29,7 @@
     }
 
     header img {
-      width: 120px;
+      width: 220px;
       animation: spinLogo 8s linear infinite;
     }
 
@@ -79,6 +79,13 @@
       filter: brightness(1.2);
     }
 
+    .booking-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2rem;
+    }
+
     .booking img {
       width: 50%;
       animation: bounce 2s infinite;
@@ -125,14 +132,12 @@
     }
 
     .now-book {
-      margin-top: 2rem;
       font-size: 1.5rem;
       background-color: #ff00ff;
       color: black;
       padding: 1rem 2rem;
       border-radius: 10px;
       animation: flicker 2s infinite;
-      display: inline-block;
       text-decoration: none;
       font-weight: bold;
     }
@@ -174,8 +179,10 @@
 
   <div class="section booking">
     <h2>JETZT TERMIN BUCHEN</h2>
-    <a class="now-book" href="#">Hier klicken für Glanz ✨</a>
-    <img src="book-now.jpg" alt="Book Now">
+    <div class="booking-container">
+      <a class="now-book" href="#">Hier klicken für Glanz ✨</a>
+      <img src="book-now.jpg" alt="Book Now">
+    </div>
   </div>
 
   <div class="section team">
